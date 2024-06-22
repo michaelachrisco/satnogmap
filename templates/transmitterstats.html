@@ -1,0 +1,48 @@
+<script data-goatcounter="https://kd9kck.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+
+<table>
+<thead>
+<tr>
+<th>“NORAD ID”</th>
+<th>Satellite</th>
+<th>Transmitter</th>
+<th>Total</th>
+<th>Good</th>
+<th>Good/Total %</th>
+<th>Bad</th>
+<th>Bad/Total %</th>
+<th>Unknown</th>
+<th>Unknown/Total %</th>
+</tr>
+</thead>
+<tbody>
+{% for x in stats%}
+    <tr>
+    <td>{{x.norad}}</td>
+    <td>{{x.sat_name}}</td>
+    <td>{{x.transmitter_name}}</td>
+    <td>{{x.total_count}}</td>
+    <td>{{x.good_count}}</td>
+    <td>{{x.success_rate}}%</td>
+    <td>{{x.bad_count}}</td>
+    <td>{{x.bad_rate}}%</td>
+    <td>{{x.unknown_count}}</td>
+    <td>{{x.unknown_rate}}%</td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>

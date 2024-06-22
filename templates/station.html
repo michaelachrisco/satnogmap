@@ -1,0 +1,84 @@
+<head>
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.118/Build/Cesium/Cesium.js"></script>
+   <link href="https://cesium.com/downloads/cesiumjs/releases/1.118/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script data-goatcounter="https://kd9kck.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+</head>
+
+<style>
+#overlay {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+    font-family: monospace;
+    padding: 1em;
+}
+
+</style>
+
+  <div id="cesiumContainer" style="width: 100%; height:100%"></div>
+<div id="overlay"><div><span id="credit"></span></div></div>	
+  <script>
+    var timeElement = document.getElementById("credit");
+    var timeNode = document.createTextNode("");
+    timeElement.appendChild(timeNode);
+    
+    timeNode.nodeValue = "KD9KCK's Satnogs Map"
+
+
+   
+    Station = Cesium.CzmlDataSource.load("/czmlstation/{{station}}");
+    // Create your own token by navigating to https://ion.cesium.com/tokens?page=1
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyMzEyMmViMC0zNjUyLTQ5YzgtOTEyNi04M2UxOTkyYWFkNzMiLCJpZCI6MjIzNzU3LCJpYXQiOjE3MTkwMDczODJ9.aSxCZ45i8gIV6wkCdYZ9AgmKgkrHcRHMmhA4DGHM-rc';
+    const viewer = new Cesium.Viewer("cesiumContainer",{shadows:true,geocoder:false,timeline:false,vrButton:false,homeButton:false,animation:true,baseLayerPicker:false,navigationInstructionsInitiallyVisible:false,navigationHelpButton:false});
+
+    viewer.scene.setTerrain(
+    new Cesium.Terrain(
+        Cesium.CesiumTerrainProvider.fromIonAssetId(1),
+    ),
+    );
+    //viewer.terrainProvider = Cesium.createWorldTerrain();
+    viewer.scene.globe.shadows=Cesium.ShadowMode.CAST_ONLY;
+    viewer.scene.globe.enableLighting = true;
+    viewer.dataSources.add(Station);
+    var now = new Cesium.JulianDate();
+    viewer.clock.currentTime = now;
+    viewer.clock.shouldAnimate = true;
+
+    
+ const download = async () => {
+        Station = Cesium.CzmlDataSource.load("/czmlstation/{{station}}");
+    }
+    
+    
+    setInterval(function(){
+       
+    download();
+    update();
+
+}, 1000*60*15);
+
+    
+     function update(){
+        viewer.dataSources.removeAll();
+        
+            viewer.dataSources.add(Station);
+        
+    }
+    
+    
+    function toggle(){
+        viewer.animation.container.hidden = !viewer.animation.container.hidden;
+        
+    }
+    
+
+    
+  </script>
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This visual work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a> <a href="https://gitlab.com/chibill/satnogsmap/tree/master"> Source Code</a> is licensed under the AGPL license.  Produced by William Gaylord KD9KCK 
