@@ -1,4 +1,6 @@
-#Satnogs-Map
+# Satnogs-Map
+
+Heavily based on https://gitlab.com/chibill/satnogsmap
 
 Uses CesiumJS and a python backend to make a very nice map view of the satnogs network.
 
